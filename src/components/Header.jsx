@@ -1,15 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import DisplaySize from "../helper/DisplaySize";
 import { FlexDisplay, ContentDisplay } from "../helper/AppStyle";
 
-export const Header = ({
-  title,
-  revert = false,
-  xlImage,
-  mdImage,
-  smImage,
-}) => {
-  const HeaderStyled = styled.header`
+export const Header = ({ title, xlImage, mdImage, smImage }) => {
+  const HeaderStyled = styled.div`
     display: flex;
     justify-content: center;
     font-size: 90px;
@@ -24,13 +18,29 @@ export const Header = ({
       text-overflow: ellipsis;
       margin-top: 50px;
       max-width: ${DisplaySize.xl / 2 - 150}px;
-      padding-left: ${revert ? 120 : 60}px;
+    }
+
+    .athletes {
+      padding-top: 20px;
+      padding-left: 50px;
+    }
+
+    .players {
+      margin-top: 40px;
+      padding-left: 123px;
     }
 
     @media (max-width: ${DisplaySize.frame}px) {
       .title {
-        padding-left: ${revert ? 140 : 60}px;
         max-width: ${DisplaySize.frame / 2 - 150}px;
+      }
+
+      .athletes {
+        padding-left: 60px;
+      }
+
+      .players {
+        padding-left: 140px;
       }
     }
 
@@ -40,19 +50,35 @@ export const Header = ({
       .title {
         max-width: ${DisplaySize.lg / 2 - 100}px;
         position: absolute;
-        margin-top: ${revert ? 15 : 0}px;
         padding-left: 30px;
         translate: 0;
+      }
+
+      .athletes {
+        margin-top: 0px;
+      }
+
+      .players {
+        margin-top: 15px;
       }
     }
 
     @media (max-width: ${DisplaySize.sm}px) {
-      margin-top: ${revert ? 5 : 25}px;
       font-size: 50px;
+      line-height: 58.59px;
+      margin: 0px 0 70px 0;
 
       .title {
         max-width: ${DisplaySize.sm / 2 - 100}px;
         padding-left: 20px;
+      }
+
+      .athletes {
+        margin-top: 25px;
+      }
+
+      .players {
+        margin-top: 5px;
       }
     }
   `;
@@ -60,7 +86,21 @@ export const Header = ({
   const Absolute = styled(ContentDisplay)`
     position: absolute;
     width: 100%;
-    flex-direction: ${revert ? "row-reverse" : "row"};
+    translate: 0 -7%;
+    z-index: 2;
+
+    ${(props) =>
+      props.title === "athletes" &&
+      css`
+        flex-direction: row;
+      `}
+
+    ${(props) =>
+      props.title === "players" &&
+      css`
+        flex-direction: row-reverse;
+        padding-top: 20px;
+      `}
 
     @media (max-width: ${DisplaySize.sm}px) {
       position: relative;
@@ -72,45 +112,120 @@ export const Header = ({
   const Image = styled.div`
     position: relative;
     width: 100%;
-    translate: ${revert ? 6 : -2}% ${revert ? -6 : 1}%;
+
+    ${(props) =>
+      props.title === "athletes" &&
+      css`
+        translate: -3% 2%;
+      `}
+
+    ${(props) =>
+      props.title === "players" &&
+      css`
+        translate: 7% -6%;
+      `}
 
     img {
-      height: ${revert ? 50 : 60}vw;
-      max-height: ${revert ? 815 : 950}px;
+      ${(props) =>
+        props.title === "athletes" &&
+        css`
+          height: 60vw;
+          max-height: 950px;
+        `}
+
+      ${(props) =>
+        props.title === "players" &&
+        css`
+          height: 50vw;
+          max-height: 815px;
+        `}
     }
 
     @media (max-width: 1580px) {
-      translate: ${revert ? 5 : 20}% ${revert ? -10 : -3}%;
+      ${(props) =>
+        props.title === "athletes" &&
+        css`
+          translate: 20% -3%;
+        `}
+
+      ${(props) =>
+        props.title === "players" &&
+        css`
+          translate: 5% -10%;
+        `}
     }
 
     @media (max-width: ${DisplaySize.lg}px) {
-      translate: 0% ${revert ? 0 : 3}%;
+      ${(props) =>
+        props.title === "athletes" &&
+        css`
+          position: absolute;
+          translate: 0% 3%;
+        `}
+
+      ${(props) =>
+        props.title === "players" &&
+        css`
+          position: relative;
+          translate: 0% 0%;
+        `}
+      
 
       img {
         height: 100vw;
-        max-height: ${revert ? 568 : 719}px;
-      }
+        ${(props) =>
+          props.title === "athletes" &&
+          css`
+            max-height: 719px;
+          `}
 
-      position: ${revert ? "relative" : "absolute"};
+        ${(props) =>
+          props.title === "players" &&
+          css`
+            max-height: 568px;
+          `}
+      }
     }
 
     @media (max-width: ${DisplaySize.sm}px) {
       display: flex;
       justify-content: center;
       position: absolute;
-      translate: 0 ${revert ? 85 : 70}px;
+
+      ${(props) =>
+        props.title === "athletes" &&
+        css`
+          translate: 0 70px;
+          padding-top: 30px;
+        `}
+
+      ${(props) =>
+        props.title === "players" &&
+        css`
+          translate: 0 85px;
+        `}
 
       img {
-        max-height: ${revert ? 250 : 280}px;
+        ${(props) =>
+          props.title === "athletes" &&
+          css`
+            max-height: 280px;
+          `}
+
+        ${(props) =>
+          props.title === "players" &&
+          css`
+            max-height: 250px;
+          `}
       }
     }
   `;
 
   return (
     <HeaderStyled>
-      <Absolute style={{ translate: "0 -5%", zIndex: 2 }}>
+      <Absolute title={title}>
         <FlexDisplay sm={1}>
-          <Image>
+          <Image title={title}>
             <picture>
               <source
                 media={`(min-width: ${DisplaySize.lg + 1}px)`}
@@ -127,12 +242,12 @@ export const Header = ({
                 srcSet={smImage}
               />
 
-              <img alt="football player" />
+              <img alt="displayImg" />
             </picture>
           </Image>
         </FlexDisplay>
         <FlexDisplay sm={2}>
-          <div className="title">{title}</div>
+          <div className={`title ${title}`}>{title}</div>
         </FlexDisplay>
       </Absolute>
     </HeaderStyled>

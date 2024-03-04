@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FlexDisplay, ContentDisplay } from "../helper/AppStyle";
 import DisplaySize from "../helper/DisplaySize";
 
@@ -10,9 +10,9 @@ export const Content = ({
   background = "#FFFFFF",
   contentColor = "#000000",
   noColor = "#000000",
-  revert = false,
+  type,
 }) => {
-  const ContentStyled = styled.article`
+  const ContentStyled = styled.div`
     display: flex;
     justify-content: center;
     background: ${background};
@@ -22,13 +22,23 @@ export const Content = ({
       padding-left: 120px;
     }
 
-    @media (max-width: ${DisplaySize.xl}px) {
+    @media (max-width: ${DisplaySize.lg}px) {
       padding: 30px 0;
     }
 
     @media (max-width: ${DisplaySize.lg}px) {
       .content {
-        padding-left: ${revert ? 10 : 20}px;
+        ${(props) =>
+          props.type === "athletes" &&
+          css`
+            padding-left: 20px;
+          `}
+
+        ${(props) =>
+          props.type === "players" &&
+          css`
+            padding-left: 10px;
+          `}
       }
     }
 
@@ -96,7 +106,17 @@ export const Content = ({
     @media (max-width: ${DisplaySize.lg}px) {
       font-size: 18px;
       padding-left: 20px;
-      padding-right: ${revert ? 55 : 30}px;
+      ${(props) =>
+        props.type === "athletes" &&
+        css`
+          padding-right: 30px;
+        `}
+
+      ${(props) =>
+        props.type === "players" &&
+        css`
+          padding-right: 55px;
+        `}
     }
 
     @media (max-width: ${DisplaySize.sm}px) {
@@ -108,15 +128,15 @@ export const Content = ({
   `;
 
   return (
-    <ContentStyled>
-      <ContentDisplay revert={revert}>
+    <ContentStyled type={type}>
+      <ContentDisplay type={type}>
         <FlexDisplay sm={1} className="space" />
         <FlexDisplay sm={2} className="content">
           <Title>
             <TitleNumber>{no}</TitleNumber>
             <TitleText>{title}</TitleText>
           </Title>
-          <TextDisplay>{content}</TextDisplay>
+          <TextDisplay type={type}>{content}</TextDisplay>
         </FlexDisplay>
       </ContentDisplay>
     </ContentStyled>

@@ -1,11 +1,21 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import DisplaySize from "./DisplaySize";
 
 export const ContentDisplay = styled.div`
   width: 100%;
   max-width: ${DisplaySize.frame}px;
   display: flex;
-  flex-direction: ${({ revert }) => (revert ? "row-reverse" : "row")};
+  ${(props) =>
+    props.type === "athletes" &&
+    css`
+      flex-direction: row;
+    `}
+
+  ${(props) =>
+    props.type === "players" &&
+    css`
+      flex-direction: row-reverse;
+    `}
 `;
 
 export const FlexDisplay = styled.div`

@@ -45,6 +45,6 @@ export const players = [
     background: "#090C35",
     underlineColor: "white",
     contentColor: "white",
-    numberColor: "#8F6BE8",
+    noColor: "#8F6BE8",
   },
 ];

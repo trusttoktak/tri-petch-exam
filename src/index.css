@@ -1,11 +1,9 @@
 body {
   margin: 0;
   font-family: Roboto, sans-serif;
+  touch-action: pan-x pan-y;
+  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   caret-color: transparent;
-}
-
-#root {
-  margin: 0;
 }
